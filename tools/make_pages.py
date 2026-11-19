@@ -1,6 +1,6 @@
 """contents.py の目次から、各教材のページ（<folder>/README.md）と、
 トップの README.md の教材の表を作る。書いたノートブックには Colab で開くボタンを付け、
-まだのものは「準備中」と書く。時間の目安は src/ の md の「かかる時間の目安」から取る。"""
+まだのものは「準備中」と書く。"""
 import re
 from pathlib import Path
 
@@ -18,18 +18,6 @@ def find_notebook(folder, part_dir, n):
     return hits[0].relative_to(ROOT).as_posix() if hits else None
 
 
-def read_time(nb_path):
-    md = ROOT / "src" / Path(nb_path).with_suffix(".md")
-    if not md.exists():
-        return ""
-    lines = md.read_text(encoding="utf-8").splitlines()
-    for i, line in enumerate(lines):
-        if line.strip() == "## かかる時間の目安":
-            for nxt in lines[i + 1:]:
-                if nxt.strip():
-                    return re.sub(r"ほど$", "", nxt.strip())
-    return ""
-
 
 def book_page(book):
     out = [f"# 教材{book['no']}「{book['name']}」", "",
@@ -42,7 +30,7 @@ def book_page(book):
     for part in book["parts"]:
         if part["title"]:
             out += [f"## {part['title']}", ""]
-        out += ["| 回 | 内容 | 時間の目安 | ノートブック |", "|---|---|---|---|"]
+        out += ["| 回 | 内容 | ノートブック |", "|---|---|---|"]
         for k, title in enumerate(part["items"]):
             n = part.get("start", 1) + k
             total += 1
@@ -50,9 +38,9 @@ def book_page(book):
             if nb:
                 done += 1
                 link = f"[![Colab で開く]({BADGE})](https://colab.research.google.com/github/{REPO}/blob/main/{nb})"
-                out.append(f"| 第{n}回 | {title} | {read_time(nb)} | {link} |")
+                out.append(f"| 第{n}回 | {title} | {link} |")
             else:
-                out.append(f"| 第{n}回 | {title} | | 準備中 |")
+                out.append(f"| 第{n}回 | {title} | 準備中 |")
         out.append("")
     out += ["---", "", "[トップページへ戻る](../README.md)", ""]
     return "\n".join(out), done, total
