@@ -19,4 +19,6 @@ for md in "$@"; do
     echo "FAIL $out"; tail -20 /tmp/nbbuild_err.txt; fail=1
   fi
 done
+# 各教材のページとトップの表を作り直す
+"$PY" "$ROOT/tools/make_pages.py"
 exit $fail
