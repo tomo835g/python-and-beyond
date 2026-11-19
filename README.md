@@ -29,3 +29,9 @@ AI（Colab の Gemini、ChatGPT、Claude など）に質問しながら進める
 - コード：[MIT](LICENSE-MIT.txt)
 
 出典を書けば、授業で配る、自分の分野に合わせて直して使う、などは自由です。
+
+出典の書き方の例：「Tomohiko KONNO『Python and Beyond』（https://github.com/tomo835g/python-and-beyond 、CC BY 4.0）」
+
+## 作者
+
+Tomohiko KONNO
