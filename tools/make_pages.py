@@ -30,6 +30,8 @@ def book_page(book):
     for part in book["parts"]:
         if part["title"]:
             out += [f"## {part['title']}", ""]
+        if part.get("note"):
+            out += [part["note"], ""]
         out += ["| 回 | 内容 | ノートブック |", "|---|---|---|"]
         for k, title in enumerate(part["items"]):
             n = part.get("start", 1) + k
